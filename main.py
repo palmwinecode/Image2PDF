@@ -39,13 +39,13 @@ class Image2PDFConverter:
         pdf_name_entry.pack()
 
         # Add button to convert selected images to PDF
-        convert_button = tk.Button(self.root, text="Covert to PDF", command=self.convert_images_to_pdf)
+        convert_button = tk.Button(self.root, text="Convert to PDF", command=self.convert_images_to_pdf)
         convert_button.pack(pady=(20, 40))
 
     # Function to select images
     def select_images(self) -> None:
         # Get selected images
-        self.image_paths = filedialog.askopenfilenames(title="Select Imges", filetypes=[("Image files", "*.png;*.jpg;*.jpeg")])
+        self.image_paths = filedialog.askopenfilenames(title="Select Images", filetypes=[("Image files", "*.png;*.jpg;*.jpeg")])
 
         # Call function to update listbox
         self.update_selected_images_listbox()
@@ -64,7 +64,7 @@ class Image2PDFConverter:
             self.selected_images_listbox.insert(tk.END, image_path)
 
     # Function to convert selected images to PDF
-    def convert_images_to_pdf(self):
+    def convert_images_to_pdf(self) -> None:
         # Check if user selected images
         if not self.image_paths:
             return
@@ -72,7 +72,7 @@ class Image2PDFConverter:
         # Get output name from user, if no input from user save as "Output.pdf"
         output_pdf_path = self.output_pdf_name.get() + ".pdf" if self.output_pdf_name.get() else "Output.pdf"
 
-        # Create a PDF canvas obhect
+        # Create a PDF canvas object
         pdf = canvas.Canvas(output_pdf_path, pagesize=(612, 792))
 
         # Loop thorugh selected images
@@ -81,19 +81,19 @@ class Image2PDFConverter:
             img = Image.open(image_path)
 
             # Set available size 
-            available_width = 540
-            available_height = 720
+            available_width: int = 540
+            available_height: int = 720
 
             # Determine scale factor
-            scale_factor = min(available_width / img.width, available_height / img.height)
+            scale_factor: float = min(available_width / img.width, available_height / img.height)
 
             # Apply scale factor
-            new_width = img.width * scale_factor
-            new_height = img.height * scale_factor
+            new_width: float = img.width * scale_factor
+            new_height: float = img.height * scale_factor
 
             # Center images in file
-            x_centered = (612 - new_width) / 2
-            y_centered = (792 - new_height) / 2
+            x_centered: float = (612 - new_width) / 2
+            y_centered: float = (792 - new_height) / 2
 
             # Fill with white background
             pdf.setFillColorRGB(255, 255, 255)
